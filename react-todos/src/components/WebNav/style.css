@@ -1,0 +1,15 @@
+#navbar{
+    width: 100%;
+    background-color: slategray;
+}
+
+#navbar ul {
+    list-style: none;
+    display: flex;
+}
+
+#navbar ul li {
+    font-size: 250%;
+    padding: 1%;
+    margin: 0 1%;
+}

@@ -1,4 +1,13 @@
 import React, { createContext, useReducer, useContext } from "react";
+import {
+    SET_CURRENT_EVENT,
+    ADD_EVENT,
+    REMOVE_EVENT,
+    SAVE_EVENTS,
+    ADD_REOCCURING,
+    REMOVE_REOCCURING,
+    SAVE_REOCCURING
+} from "./actions"
 
 const StoreContext = createContext();
 const { Provider } = StoreContext;
@@ -37,18 +46,18 @@ const reducer = (state, action) => {
                 reoccuring: [action.post, ...state.reoccuring]
             };
 
-        case SAVE_REOCCURING:
-            localStorage.setItem('reoccuring', JSON.stringify(state.reoccuring))
-            return {
-                ...state
-            };
-
         case REMOVE_REOCCURING:
             return {
                 ...state,
                 reoccuring: state.reoccuring.filter((event) => {
                     return event._id !== action._id;
                 })
+            };
+
+        case SAVE_REOCCURING:
+            localStorage.setItem('reoccuring', JSON.stringify(state.reoccuring))
+            return {
+                ...state
             };
 
         default:
