@@ -1,17 +1,18 @@
 import React, { useRef } from "react";
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_EVENT } from "../../utils/actions";
-import { Button, Form, Input } from 'reactstrap';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function CreateEventForm() {
     const titleRef = useRef();
     const startTimeRef = useRef();
     const durationRef = useRef();
-    const [state, dispatch] = useStoreContext();
+    const [, dispatch] = useStoreContext();
 
     const handleSubmit = e => {
         e.preventDefault();
-        let newEvent = {          
+        let newEvent = {      
+            _id: uuidv4(),    
             title: titleRef.current.value,
             startTime: startTimeRef.current.value,
             duration: durationRef.current.value
@@ -20,7 +21,7 @@ export default function CreateEventForm() {
         dispatch({
             type: ADD_EVENT,
             post: newEvent
-        }).catch(err => console.log(err));
+        })
     
         titleRef.current.value = "";
         startTimeRef.current.value = "";
@@ -30,12 +31,12 @@ export default function CreateEventForm() {
     return (
         <div>
             <h4>Create a Event for your day!</h4>
-            <Form onSubmit={handleSubmit}>
-                <Input  required ref={titleRef} placeholder="Title" />
-                <Input  required ref={startTimeRef} placeholder="Start Time" />
-                <Input  ref={durationRef} placeholder="Duration (min)" />
-                <Button className="btn btn-success mt-3 mb-5" type="submit">Save Post</Button>
-            </Form>
+            <form onSubmit={handleSubmit}>
+                <input required ref={titleRef} placeholder="Title" />
+                <input required ref={startTimeRef} placeholder="Start Time" />
+                <input ref={durationRef} placeholder="Duration (min)" />
+                <button className="btn btn-success mt-3 mb-5" type="submit">Save Post</button>
+            </form>
         </div>
     )
 }
