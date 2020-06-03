@@ -4,6 +4,7 @@ import {
     ADD_EVENT,
     REMOVE_EVENT,
     GET_EVENTS,
+    EDIT_EVENT,
     ADD_REOCCURING,
     REMOVE_REOCCURING,
     GET_REOCCURING
@@ -20,7 +21,6 @@ const reducer = (state, action) => {
     switch (action.type) {
         case SET_CURRENT_EVENT:
             let newCurr = state.events.filter((event) => event._id === action._id)
-            console.log(newCurr)
             return {
                 ...state,
                 currentEvent: newCurr[0]
@@ -47,10 +47,28 @@ const reducer = (state, action) => {
                 })
             };
 
-        case GET_EVENTS:
+        case EDIT_EVENT: 
+            localStorage.removeItem("events");
+            let editArr = state.events.filter((event) => {
+                return event._id !== action._id;
+            });
+            editArr = [action.post, ...editArr];
+            save(editArr, 'events')
             return {
                 ...state,
-                events: [...state.events].concat(JSON.parse(localStorage.getItem('events')))
+                currentEvent: action.post,
+                events: [...editArr]
+            }
+
+        case GET_EVENTS:
+            let eventList = JSON.parse(localStorage.getItem('events'));
+            if(eventList !== null){
+                eventList = eventList.filter(event => event !== null)
+            }
+            save(eventList, "events");
+            return {
+                ...state,
+                events: [].concat(eventList)
             };
 
         case ADD_REOCCURING:

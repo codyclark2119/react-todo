@@ -4,3 +4,8 @@
     width: 100%;
 }
 
+#home-page, #event-page, #reoccuring-page, #missing-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
+import { Button } from 'reactstrap';
 import { useStoreContext } from "../../utils/GlobalState";
-import { REMOVE_EVENT } from "../../utils/actions";
+import { REMOVE_EVENT, GET_EVENTS } from "../../utils/actions";
+import "./style.css"
 
 export default function EventList() {
     const [{events}, dispatch] = useStoreContext();
@@ -13,21 +15,29 @@ export default function EventList() {
         })
     };
 
+    const loadEvents = () => {
+        dispatch({
+            type: GET_EVENTS
+        })
+    }
+
+    useEffect(loadEvents, [])
+
     return (
         <>
             <h1>All Events</h1>
-            <h3 className="mb-5 mt-5">Click on a event to view</h3>
+            <h3 className="mb-5 5">Click on a event to view</h3>
             {events.length ? (
                 <div>
                     {events.map(event => {
-                        return (<div key={event._id}>
-                            <Link to={"/event/" + event._id}>
-                                <strong>
-                                {event.title} at {event.startTime} for {event.duration}
-                                </strong>
-                            </Link>
-                            <button onClick={() => removeEvent(event._id)} >X</button>
-                        </div>)
+                        if(event !== null) {
+                            return (<div key={event._id} className='eventItem'>
+                                <Link to={"/event/" + event._id}>
+                                    {`${event.title} at ${event.startTime}`}
+                                </Link>
+                                <Button color="danger" className='delButton' onClick={() => removeEvent(event._id)} >X</Button>
+                            </div>)  
+                        }
                     })}
                 </div>
             ) : (
