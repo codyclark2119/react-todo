@@ -4,9 +4,9 @@ import WebNav from "./components/WebNav"
 import Home from "./pages/Home";
 import Event from "./pages/Event";
 import NoMatch from "./pages/NoMatch";
-import { Jumbotron } from 'reactstrap';
+import Footer from "./components/Footer"
 import { StoreProvider } from "./utils/GlobalState";
-import ReoccuringList from "./pages/ReoccuringList";
+import ReoccuringList from "./pages/CompleteList";
 import './App.css'
 
 function App() {
@@ -15,15 +15,14 @@ function App() {
       <div id='App'>
         <StoreProvider>
           <WebNav />
-          <Jumbotron>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/home" component={Home} />
-              <Route exact path="/reoccuring" component={ReoccuringList} />
+              <Route exact path="/complete" component={ReoccuringList} />
               <Route exact path="/event/:id" component={Event} />
               <Route component={NoMatch} />
             </Switch>
-          </Jumbotron>
+          <Footer />
         </StoreProvider>
       </div>
     </Router>

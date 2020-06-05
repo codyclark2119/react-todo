@@ -2,13 +2,23 @@
     text-align: center;
 }
 
+.formContainer {
+    width: 30%;
+}
+
 form {
     display: flex;
     flex-direction: column;
-    padding: 5%;
+    align-items: center;
+    padding: 5% 0 0 0;
 }
 
 form input {
     text-align: center;
     margin: 2% 0;
+    max-width: 80%;
+}
+
+form button {
+    width: 30%;
 }

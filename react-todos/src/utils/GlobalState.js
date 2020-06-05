@@ -5,9 +5,11 @@ import {
     REMOVE_EVENT,
     GET_EVENTS,
     EDIT_EVENT,
-    ADD_REOCCURING,
-    REMOVE_REOCCURING,
-    GET_REOCCURING
+    START_EVENT,
+    END_EVENT,
+    SAVE_EVENT,
+    REMOVE_COMPLETE,
+    GET_COMPLETE
 } from "./actions"
 
 const StoreContext = createContext();
@@ -17,13 +19,30 @@ const save = (arr, name) => {
     localStorage.setItem(name, JSON.stringify(arr))
 }
 
+const filterList = (arr, id) => {
+    let returnArr = arr.filter((event) => {
+        return event._id !== id;
+    })
+    return returnArr;
+}
+
+const filterOne = (arr, id) => {
+    let item = arr.filter((event) => {
+        return (event._id === id);
+    })
+    return item[0];
+}
+
 const reducer = (state, action) => {
     switch (action.type) {
         case SET_CURRENT_EVENT:
-            let newCurr = state.events.filter((event) => event._id === action._id)
+            let newCurr = filterOne(state.events, action._id);
+            if (!newCurr){
+                newCurr = filterOne(state.complete, action._id);
+            }
             return {
                 ...state,
-                currentEvent: newCurr[0]
+                currentEvent: newCurr
             };
 
         case ADD_EVENT:
@@ -36,65 +55,99 @@ const reducer = (state, action) => {
 
         case REMOVE_EVENT:
             localStorage.removeItem("events");
-            save((state.events.filter((event) => {
-                return event._id !== action._id;
-            })), 'events')
-
+            save(filterList(state.events, action._id), 'events')
             return {
                 ...state,
-                events: state.events.filter((event) => {
-                    return event._id !== action._id;
-                })
+                currentEvent: {
+                    _id: 0,
+                    title: "",
+                    startTime: "",
+                    duration: ""
+                },
+                events: filterList(state.events, action._id)
             };
 
         case EDIT_EVENT: 
             localStorage.removeItem("events");
-            let editArr = state.events.filter((event) => {
-                return event._id !== action._id;
-            });
-            editArr = [action.post, ...editArr];
+            let editArr = filterList(state.events, action._id)
+            let editPost = filterOne(state.events, action._id);
+            editPost.title = action.title;
+            editArr = [editPost, ...editArr];
             save(editArr, 'events')
             return {
                 ...state,
-                currentEvent: action.post,
+                currentEvent: editPost,
                 events: [...editArr]
+            }
+
+        case START_EVENT:
+            localStorage.removeItem("events");
+            let startArr = filterList(state.events, action._id)
+            let editStart = filterOne(state.events, action._id);
+            editStart.startTime = action.startTime;
+            startArr = [editStart, ...startArr];
+            save(startArr, 'events')
+            return {
+                ...state,
+                currentEvent: editStart,
+                events: [...startArr]
+            }
+
+        case END_EVENT:
+            localStorage.removeItem("events");
+            let endArr = filterList(state.events, action._id)
+            let editTime = filterOne(state.events, action._id);
+            editTime.endTime = action.endTime;
+            endArr = [editTime, ...endArr];
+            save(endArr, 'events')
+            return {
+                ...state,
+                currentEvent: editTime,
+                events: [...endArr]
             }
 
         case GET_EVENTS:
             let eventList = JSON.parse(localStorage.getItem('events'));
             if(eventList !== null){
-                eventList = eventList.filter(event => event !== null)
+                eventList = filterList(eventList, null)
             }
+            else { eventList = [] }
             save(eventList, "events");
             return {
                 ...state,
                 events: [].concat(eventList)
             };
 
-        case ADD_REOCCURING:
-            localStorage.removeItem("reoccuring");
-            save([action.post, ...state.reoccuring], 'reoccuring')
+        case SAVE_EVENT:
+            localStorage.removeItem("complete");
+            localStorage.removeItem("events")
+            let newFav = filterOne(state.events, action._id)
+            save([newFav, ...state.complete], 'complete')
+            save(filterList(state.events, newFav._id), 'events')
             return {
                 ...state,
-                reoccuring: [action.post, ...state.reoccuring]
+                events: filterList(state.events, newFav._id),
+                complete: [newFav, ...state.complete]
             };
 
-        case REMOVE_REOCCURING:
-            localStorage.removeItem("reoccuring");
-            save((state.reoccuring.filter((event) => {
-                return event._id !== action._id;
-            })), 'reoccuring')
+        case REMOVE_COMPLETE:
+            localStorage.removeItem("complete");
+            save(filterList(state.complete, action._id), 'complete')
             return {
                 ...state,
-                reoccuring: state.reoccuring.filter((event) => {
-                    return event._id !== action._id;
-                })
+                complete: filterList(state.complete, action._id)
             };
 
-        case GET_REOCCURING:
+        case GET_COMPLETE:
+            let completeList = JSON.parse(localStorage.getItem('complete'));
+            if(completeList !== null){
+                completeList = filterList(completeList, null)
+            }
+            else { completeList = [] }
+            save(completeList, "complete");
             return {
                 ...state,
-                reoccuring: [...state.reoccuring].concat(JSON.parse(localStorage.getItem('reoccuring')))
+                complete: [].concat(completeList)
             };
 
         default:
@@ -111,7 +164,7 @@ const StoreProvider = ({ value = [], ...props }) => {
             startTime: "",
             duration: ""
         },
-        reoccuring: []
+        complete: []
     });
 
     return <Provider value={[state, dispatch]} {...props} />;

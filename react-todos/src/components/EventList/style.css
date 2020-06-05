@@ -1,11 +1,54 @@
+#eventList {
+    height: 400px;
+    max-width: 90%;
+    overflow-y: scroll;
+    display: flex;
+    flex-flow: column;
+    border: 3px solid black;
+    margin-bottom: 25%;
+}
+
 .eventItem {
-    font-size: 200%;
+    font-size: 250%;
     text-align: center;
+    display: flex; 
+    align-items: center;
+    background-color: snow;
+    padding: 10px 20px;
+}
+
+.eventText {
+    min-width: 70%;
+    max-width: 90%;
     display: flex;
     justify-content: center;
-    align-content: center;
+    flex-direction: wrap;
+}
+
+.eventBtns {
+    min-width: 30%;
+    max-width: 90%;
+    display: flex;
 }
 
 .delButton {
     margin: 0 15px
+}
+
+@media screen and (max-width: 800px) {
+    .eventItem {
+        flex-direction: column;
+    }
+
+    #eventList {
+        height: 300px;
+    }
+    
+}
+
+@media screen and (max-width: 400px) {
+    .eventItem {
+        font-size: 150%;
+    }
+    
 }

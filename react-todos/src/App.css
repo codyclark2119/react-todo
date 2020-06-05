@@ -1,11 +1,27 @@
-#App {
-    background-color: slategray;
-    height: 100%;
-    width: 100%;
+#App{
+    background-color: white;
+    object-fit: fill;
+    font-family: 'Manrope', sans-serif;
+
 }
 
-#home-page, #event-page, #reoccuring-page, #missing-page{
+#home-page, #event-page, #complete-page, #missing-page{
+    padding-top: 2%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#event-page #eventDisplay {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items:center
+}
+
+#event-page .eventHeaders {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    margin-bottom: 5%;
 }
