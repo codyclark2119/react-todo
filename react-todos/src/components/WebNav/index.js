@@ -18,7 +18,7 @@ export default function WebNav() {
                     <NavLink href="/">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/complete">Complete</NavLink>
+                    <NavLink href="/saved">Saved</NavLink>
                 </NavItem>
             </Nav>
         </Navbar>

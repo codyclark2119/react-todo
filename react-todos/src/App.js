@@ -6,7 +6,7 @@ import Event from "./pages/Event";
 import NoMatch from "./pages/NoMatch";
 import Footer from "./components/Footer"
 import { StoreProvider } from "./utils/GlobalState";
-import ReoccuringList from "./pages/CompleteList";
+import SavedList from "./pages/SavedList";
 import './App.css'
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/home" component={Home} />
-              <Route exact path="/complete" component={ReoccuringList} />
+              <Route exact path="/saved" component={SavedList} />
               <Route exact path="/event/:id" component={Event} />
               <Route component={NoMatch} />
             </Switch>

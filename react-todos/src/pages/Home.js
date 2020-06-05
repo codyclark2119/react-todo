@@ -7,7 +7,7 @@ export default function Home() {
         <div id='home-page'>
             <h2 className='subHeader'>Create a Event for your day!</h2>
             <CreateEventForm type="create"/>
-            <EventList />
+            <EventList location="home" />
         </div>
     )
 }

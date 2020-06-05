@@ -6,5 +6,5 @@ export const EDIT_EVENT = "EDIT_EVENT"
 export const START_EVENT = "START_EVENT";
 export const END_EVENT = "END_EVENT"
 export const SAVE_EVENT = "SAVE_EVENT";
-export const REMOVE_COMPLETE = "REMOVE_COMPLETE";
-export const GET_COMPLETE = "GET_COMPLETE"
+export const REMOVE_SAVED = "REMOVE_SAVED";
+export const GET_SAVED = "GET_SAVED"

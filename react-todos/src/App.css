@@ -1,8 +1,9 @@
+/* Global */
 #App{
     background-color: white;
     object-fit: fill;
     font-family: 'Manrope', sans-serif;
-
+    padding-bottom: 20px;
 }
 
 #home-page, #event-page, #complete-page, #missing-page{
@@ -10,24 +11,51 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
 }
 
+/* Event Page */
 #event-page #eventDisplay {
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    align-items:center
+    align-content:center;
+    align-items: center;
+    text-align: center;
 }
 
 #event-page .eventHeaders {
     display: flex;
     flex-direction: column;
     align-items:center;
-    margin-bottom: 5%;
+    margin-bottom: 10%;
+}
+
+#event-page .eventHeaders h1 {
+    margin-top: 5%;
+    font-size: 225%;
+}
+
+#event-page .eventHeaders h2 {
+    margin-top: 5%;
+    font-size: 165%;
 }
 
 .noEventHeader {
     text-align: center;
     margin-top: 5%;
     max-width:90%;
+}
+
+/* Home Page */
+#home-page .subHeader {
+    font-size: 200%;
+}
+
+/* Media Queries */
+@media screen and (max-width: 800px) {
+    #App{
+        margin-bottom: 40px;
+    }
+    
 }

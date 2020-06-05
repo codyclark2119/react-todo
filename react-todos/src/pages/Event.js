@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import moment from 'moment';
 import { Button } from 'reactstrap';
 import { useStoreContext } from "../utils/GlobalState";
-import { SET_CURRENT_EVENT, REMOVE_EVENT, GET_EVENTS, END_EVENT, START_EVENT, SAVE_EVENT, GET_COMPLETE } from "../utils/actions";
+import { SET_CURRENT_EVENT, REMOVE_EVENT, GET_EVENTS, END_EVENT, START_EVENT, SAVE_EVENT, GET_SAVED } from "../utils/actions";
 import CreateEventForm from "../components/CreateEventForm";
 
 export default function Event(props) {
@@ -13,7 +13,7 @@ export default function Event(props) {
             type: GET_EVENTS
         })
         dispatch({
-            type: GET_COMPLETE
+            type: GET_SAVED
         })
         dispatch({
             type: SET_CURRENT_EVENT,
@@ -29,10 +29,8 @@ export default function Event(props) {
     };
 
     const startEvent = id => {
-        console.log(moment().format("hh:mm A"))
         dispatch({
             type: START_EVENT,
-            startTime: moment().format("hh:mm A"),
             _id: id
         })
     }
@@ -41,7 +39,6 @@ export default function Event(props) {
         console.log(moment().format("hh:mm A"))
         dispatch({
             type: END_EVENT,
-            endTime: moment().format("hh:mm A"),
             _id: id
         })
     }
@@ -75,9 +72,10 @@ export default function Event(props) {
                         <div id='eventDisplay'>
                             <div className="eventHeaders">
                                 <h1>{currentEvent.startTime === "" ? `${currentEvent.title} hasn't started yet!` :
-                                    `${currentEvent.title} started at ${currentEvent.startTime}!`}</h1>
+                                    `${currentEvent.title} started at ${moment(currentEvent.startTime).format('hh:mm A')}!`}</h1>
                                 <h2>{currentEvent.endTime === "" ? `${currentEvent.title} hasn't ended yet!` :
-                                    `${currentEvent.title} Ended at ${currentEvent.endTime}!`}</h2>
+                                    `${currentEvent.title} Ended at ${moment(currentEvent.endTime).format('hh:mm A')}!`}</h2>
+                                <h3>{currentEvent.duration === "" ? '' : `${currentEvent.title} lasted ${currentEvent.duration} minutes`}</h3>
                             </div>
                             <h3>Need to edit your event title?</h3>
                             <CreateEventForm type="edit" id={props.match.params.id} />

@@ -41,7 +41,7 @@ export default function CreateEventForm({ type, id }) {
         <div className="formContainer">
             <Form onSubmit={handleSubmit}>
                 <Input required innerRef={titleRef} placeholder="Title" />
-                <Button className="btn btn-success mt-3 mb-4" type="submit">Save Event</Button>
+                <Button className="btn btn-success mt-2 mb-3" type="submit">Save Event</Button>
             </Form>
         </div>
     )

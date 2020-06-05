@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useContext } from "react";
+import moment from 'moment';
 import {
     SET_CURRENT_EVENT,
     ADD_EVENT,
@@ -8,8 +9,8 @@ import {
     START_EVENT,
     END_EVENT,
     SAVE_EVENT,
-    REMOVE_COMPLETE,
-    GET_COMPLETE
+    REMOVE_SAVED,
+    GET_SAVED
 } from "./actions"
 
 const StoreContext = createContext();
@@ -38,7 +39,7 @@ const reducer = (state, action) => {
         case SET_CURRENT_EVENT:
             let newCurr = filterOne(state.events, action._id);
             if (!newCurr){
-                newCurr = filterOne(state.complete, action._id);
+                newCurr = filterOne(state.saved, action._id);
             }
             return {
                 ...state,
@@ -84,7 +85,7 @@ const reducer = (state, action) => {
             localStorage.removeItem("events");
             let startArr = filterList(state.events, action._id)
             let editStart = filterOne(state.events, action._id);
-            editStart.startTime = action.startTime;
+            editStart.startTime = moment().format();
             startArr = [editStart, ...startArr];
             save(startArr, 'events')
             return {
@@ -97,7 +98,8 @@ const reducer = (state, action) => {
             localStorage.removeItem("events");
             let endArr = filterList(state.events, action._id)
             let editTime = filterOne(state.events, action._id);
-            editTime.endTime = action.endTime;
+            editTime.endTime = moment().format();
+            editTime.duration = moment(editTime.startTime).diff(editTime.endTime, 'minute')
             endArr = [editTime, ...endArr];
             save(endArr, 'events')
             return {
@@ -119,35 +121,35 @@ const reducer = (state, action) => {
             };
 
         case SAVE_EVENT:
-            localStorage.removeItem("complete");
+            localStorage.removeItem("saved");
             localStorage.removeItem("events")
             let newFav = filterOne(state.events, action._id)
-            save([newFav, ...state.complete], 'complete')
+            save([newFav, ...state.saved], 'saved')
             save(filterList(state.events, newFav._id), 'events')
             return {
                 ...state,
                 events: filterList(state.events, newFav._id),
-                complete: [newFav, ...state.complete]
+                saved: [newFav, ...state.saved]
             };
 
-        case REMOVE_COMPLETE:
-            localStorage.removeItem("complete");
-            save(filterList(state.complete, action._id), 'complete')
+        case REMOVE_SAVED:
+            localStorage.removeItem("saved");
+            save(filterList(state.saved, action._id), 'saved')
             return {
                 ...state,
-                complete: filterList(state.complete, action._id)
+                saved: filterList(state.saved, action._id)
             };
 
-        case GET_COMPLETE:
-            let completeList = JSON.parse(localStorage.getItem('complete'));
-            if(completeList !== null){
-                completeList = filterList(completeList, null)
+        case GET_SAVED:
+            let savedList = JSON.parse(localStorage.getItem('saved'));
+            if(savedList !== null){
+                savedList = filterList(savedList, null)
             }
-            else { completeList = [] }
-            save(completeList, "complete");
+            else { savedList = [] }
+            save(savedList, "saved");
             return {
                 ...state,
-                complete: [].concat(completeList)
+                saved: [].concat(savedList)
             };
 
         default:
@@ -162,9 +164,10 @@ const StoreProvider = ({ value = [], ...props }) => {
             _id: 0,
             title: "",
             startTime: "",
+            endTime: "",
             duration: ""
         },
-        complete: []
+        saved: []
     });
 
     return <Provider value={[state, dispatch]} {...props} />;

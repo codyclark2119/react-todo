@@ -1,26 +1,53 @@
-#eventList {
-    max-width: 90%;
+.eventHeader {
+    font-size: 200%;
+}
+
+.eventSubheader {
+    font-size: 150%;
+}
+
+.eventList {
+    min-width: 55%;
+    height: 250px;
+    margin-bottom: 6%;
     overflow-y: scroll;
     display: flex;
     flex-flow: column;
     border: 3px solid black;
+    background-color: rgb(51, 50, 50);
+}
+
+.eventList::-webkit-scrollbar {
+    width: 12px;
+}
+
+.eventList::-webkit-scrollbar-track {
+    display: none;
 }
 
 .eventItem {
-    font-size: 250%;
+    font-size: 185%;
     text-align: center;
     display: flex; 
-    align-items: center;
-    background-color: snow;
-    padding: 10px 20px;
+    justify-content: space-around;
+    padding: 10px 0;
 }
 
 .eventText {
-    min-width: 70%;
+    min-width: 60%;
     max-width: 90%;
     display: flex;
     justify-content: center;
     flex-direction: wrap;
+}
+
+.eventText a {
+    color: white;
+}
+
+.eventText a:hover {
+    color: white;
+    text-decoration: underline;
 }
 
 .eventBtns {
@@ -33,20 +60,41 @@
     margin: 0 15px
 }
 
+.fadeOut {
+    animation: fade-out-keyframes 1.5s;
+}
+
+.fadeIn {
+    animation: fade-in-keyframes 1s;
+
+}
+
+@keyframes fade-out-keyframes {
+    from {opacity: 1}
+    to {opacity: 0}
+}
+
+@keyframes fade-in-keyframes {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
 @media screen and (max-width: 800px) {
     .eventItem {
         flex-direction: column;
+        align-items:center;
     }
 
-    #eventList {
-        height: 300px;
+    .eventList {
+        min-width: 80%;
+        height: 400px;
+        border-radius: 5%;
     }
     
 }
 
 @media screen and (max-width: 400px) {
     .eventItem {
-        font-size: 150%;
+        font-size: 180%;
     }
-    
 }
