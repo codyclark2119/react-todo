@@ -62,7 +62,7 @@ export default function EventList() {
     return (
         <>
             <h1>All Events</h1>
-            <h3 className="mb-2">Click on a event to view</h3>
+            <h3>Click on a event to view</h3>
             { events.length ? (
                 <div id="eventList">
                     {events.map(event => {
@@ -81,7 +81,7 @@ export default function EventList() {
                     })}
                 </div>
             ) : (
-                <h3>You haven't added any events yet!</h3>
+                <h3 className='noEventHeader'>You haven't added any events yet!</h3>
             )}
         </>
     )

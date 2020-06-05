@@ -1,11 +1,9 @@
 #eventList {
-    height: 400px;
     max-width: 90%;
     overflow-y: scroll;
     display: flex;
     flex-flow: column;
     border: 3px solid black;
-    margin-bottom: 25%;
 }
 
 .eventItem {

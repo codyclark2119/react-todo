@@ -25,3 +25,9 @@
     align-items:center;
     margin-bottom: 5%;
 }
+
+.noEventHeader {
+    text-align: center;
+    margin-top: 5%;
+    max-width:90%;
+}
