@@ -1,0 +1,10 @@
+export const REMOVE_EVENT = "REMOVE_EVENT";
+export const SET_CURRENT_EVENT = "SET_CURRENT_EVENT";
+export const ADD_EVENT = "ADD_EVENT";
+export const GET_EVENTS = "GET_EVENTS"
+export const EDIT_EVENT = "EDIT_EVENT"
+export const START_EVENT = "START_EVENT";
+export const END_EVENT = "END_EVENT"
+export const SAVE_EVENT = "SAVE_EVENT";
+export const REMOVE_SAVED = "REMOVE_SAVED";
+export const GET_SAVED = "GET_SAVED"
